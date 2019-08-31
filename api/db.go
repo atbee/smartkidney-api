@@ -26,8 +26,9 @@ func NewMongoDB() (*MongoDB, error) {
 	}
 
 	return &MongoDB{
-		Conn: conn,
-		UCol: conn.DB(s.DBName).C(s.DBUsersCol),
+		Conn:  conn,
+		UCol:  conn.DB(s.DBName).C(s.DBUsersCol),
+		BPCol: conn.DB(s.DBName).C(s.DBBloodPressureCol),
 	}, nil
 }
 
