@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/globalsign/mgo"
 	"github.com/labstack/echo"
 	"github.com/rocketblack/smartkidney-api/model"
 	"gopkg.in/mgo.v2/bson"
@@ -13,24 +12,22 @@ import (
 
 // Login using email from gmail or facebook.
 func (db *MongoDB) Login(c echo.Context) (err error) {
+	// Bind
 	u := new(model.User)
 	if err := c.Bind(u); err != nil {
 		return err
 	}
 
+	// Check email address in database
+	s := db.CheckEmail(u)
+	if s == "not exist" {
+		return c.JSON(http.StatusUnauthorized, map[string]bool{"firstLogin": true})
+	}
+
+	// Response user data
 	res := &model.LoginRes{
 		FirstLogin: false,
-	}
-
-	q := bson.M{
-		"email": u.Email,
-	}
-
-	if err := db.UCol.Find(&q).One(u); err != nil {
-		if err == mgo.ErrNotFound {
-			return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "invalid email or password"}
-		}
-		return err
+		User:       *u,
 	}
 
 	return c.JSON(http.StatusOK, &res)
@@ -46,16 +43,13 @@ func (db *MongoDB) Register(c echo.Context) (err error) {
 		return err
 	}
 
-	// Find User
-
 	// Validate
 	if errs := validator.Validate(u); errs != nil {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid data."}
 	}
 
-	if err := db.UCol.Insert(&u); err != nil {
-		return err
-	}
+	// Save user
+	db.CreateUser(u)
 
-	return c.JSON(http.StatusOK, &u)
+	return c.JSON(http.StatusCreated, u) // User has been registered.
 }
