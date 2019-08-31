@@ -10,8 +10,9 @@ import (
 // MongoDB holds metadata about session database and collections name.
 type (
 	MongoDB struct {
-		Conn *mgo.Session
-		UCol *mgo.Collection
+		Conn  *mgo.Session
+		UCol  *mgo.Collection
+		BPCol *mgo.Collection
 	}
 )
 

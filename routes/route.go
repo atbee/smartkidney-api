@@ -14,8 +14,9 @@ func Init(e *echo.Echo) {
 	}
 
 	a := &api.MongoDB{
-		Conn: db.Conn,
-		UCol: db.UCol,
+		Conn:  db.Conn,
+		UCol:  db.UCol,
+		BPCol: db.BPCol,
 	}
 
 	// Routes

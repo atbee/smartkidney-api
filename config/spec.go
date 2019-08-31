@@ -9,10 +9,11 @@ import (
 type (
 	// Specification holds environment variable name.
 	Specification struct {
-		DBHost          string
-		DBName          string
-		DBUsersCol      string
-		APIPort         string
+		DBHost             string
+		DBName             string
+		DBUsersCol         string
+		DBBloodPressureCol string
+		APIPort            string
 	}
 )
 
@@ -21,10 +22,11 @@ func Spec() *Specification {
 	godotenv.Load()
 
 	s := Specification{
-		DBHost:          os.Getenv("DB_HOST"),
-		DBName:          os.Getenv("DB_NAME"),
-		DBUsersCol:      os.Getenv("DB_USERS_COL"),
-		APIPort:         os.Getenv("API_PORT"),
+		DBHost:             os.Getenv("DB_HOST"),
+		DBName:             os.Getenv("DB_NAME"),
+		DBUsersCol:         os.Getenv("DB_USERS_COL"),
+		DBBloodPressureCol: os.Getenv("DB_BLOODPRESSURE_COL"),
+		APIPort:            os.Getenv("API_PORT"),
 	}
 	return &s
 }
