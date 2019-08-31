@@ -22,4 +22,9 @@ func Init(e *echo.Echo) {
 	// Authentication.
 	e.POST("/login", a.Login)
 	e.POST("/register", a.Register)
+
+	// Users.
+	e.GET("/users/:id", a.FindUser)
+	e.PATCH("/users/:id", a.EditUser)
+	e.DELETE("/users/:id", a.DeleteUser)
 }
