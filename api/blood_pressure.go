@@ -11,6 +11,8 @@ import (
 )
 
 // ViewBP show logs of blood pressure for each user.
+// You can view a list of blood pressure each week by query parameter.
+// &week=00&year==0000
 func (db *MongoDB) ViewBP(c echo.Context) error {
 	id := c.Param("id")
 	bp := []*model.BloodPressureLog{}
