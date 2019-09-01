@@ -10,13 +10,13 @@ import (
 type (
 	User struct {
 		ID        bson.ObjectId `json:"_id,omitempty" bson:"_id,omitempty"`
-		Name      string        `json:"name,omitempty" bson:"name" validate:"nonzero"`
-		Email     string        `json:"email,omitempty" bson:"email" validate:"nonzero"`
-		BirthDate string        `json:"birthDate,omitempty" bson:"birthDate" validate:"len=10"`
-		Gender    string        `json:"gender,omitempty" bson:"gender" validate:"regexp=(^male$|^female$)"`
-		Hospital  string        `json:"hospital,omitempty" bson:"hospital" validate:"nonzero"`
-		Weight    string        `json:"weight,omitempty" bson:"weight"`
-		Height    string        `json:"height,omitempty" bson:"height"`
 		CreateAt  time.Time     `json:"-" bson:"createAt"`
+		Name      string        `json:"name" bson:"name,omitempty" validate:"nonzero"`
+		Email     string        `json:"email" bson:"email,omitempty" validate:"nonzero"`
+		BirthDate string        `json:"birthDate" bson:"birthDate,omitempty" validate:"len=10"`
+		Gender    string        `json:"gender" bson:"gender,omitempty" validate:"regexp=(^male$|^female$)"`
+		Hospital  string        `json:"hospital" bson:"hospital,omitempty" validate:"nonzero"`
+		Weight    int           `json:"weight,omitempty" bson:"weight,omitempty"`
+		Height    int           `json:"height,omitempty" bson:"height,omitempty"`
 	}
 )
