@@ -2,6 +2,7 @@ package api
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/labstack/echo"
@@ -37,6 +38,29 @@ func (db *MongoDB) ViewBP(c echo.Context) error {
 	}
 
 	q := []bson.M{match, unwind, replaceRoot, sort}
+
+	w := c.QueryParam("week")
+	y := c.QueryParam("year")
+	week, _ := strconv.Atoi(w)
+	year, _ := strconv.Atoi(y)
+
+	if w != "" && y != "" {
+		set := bson.M{
+			"$set": bson.M{
+				"week": bson.M{"$week": "$date"},
+				"year": bson.M{"$year": "$date"},
+			},
+		}
+
+		matchWeek := bson.M{
+			"$match": bson.M{
+				"week": week,
+				"year": year,
+			},
+		}
+
+		q = []bson.M{match, unwind, replaceRoot, set, matchWeek, sort}
+	}
 
 	if err := db.BPCol.Pipe(q).All(&bp); err != nil {
 		return c.JSON(http.StatusNotFound, "the user not found.")
