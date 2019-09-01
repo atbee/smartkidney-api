@@ -28,4 +28,12 @@ func Init(e *echo.Echo) {
 	e.GET("/users/:id", a.FindUser)
 	e.PATCH("/users/:id", a.EditUser)
 	e.DELETE("/users/:id", a.DeleteUser)
+
+	// Blood pressures(BP).
+	e.GET("/bp/:id", a.ViewBP)
+	e.POST("/bp/:id", a.AddBP)
+
+	// Glomerular infiltration rates(GIR).
+
+	// Blood sugar(BS).
 }
