@@ -29,17 +29,10 @@ func (db *MongoDB) EditUser(c echo.Context) error {
 	}
 
 	d := bson.M{
-		"$set": bson.M{
-			"name":      u.Name,
-			"birthDate": u.BirthDate,
-			"gender":    u.Gender,
-			"hospital":  u.Hospital,
-			"weight":    u.Weight,
-			"height":    u.Height,
-		},
+		"$set": &u,
 	}
 
-	if err := db.UCol.UpdateId(bson.ObjectIdHex(id), d); err != nil {
+	if err := db.UCol.UpdateId(bson.ObjectIdHex(id), &d); err != nil {
 		return c.JSON(http.StatusBadRequest, "unable to edit user.")
 	}
 
