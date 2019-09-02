@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    environments:
+    environment:
       - DB_HOST
       - DB_NAME
       - DB_USERS_COL
