@@ -14,9 +14,11 @@ func Init(e *echo.Echo) {
 	}
 
 	a := &api.MongoDB{
-		Conn:  db.Conn,
-		UCol:  db.UCol,
-		BPCol: db.BPCol,
+		Conn:   db.Conn,
+		UCol:   db.UCol,
+		BPCol:  db.BPCol,
+		GIRCol: db.GIRCol,
+		BSCol:  db.BSCol,
 	}
 
 	// Routes
@@ -34,6 +36,10 @@ func Init(e *echo.Echo) {
 	e.POST("/bp/:id", a.AddBP)
 
 	// Glomerular infiltration rates(GIR).
+	e.GET("/gir/:id", a.ViewGIR)
+	e.POST("/gir/:id", a.AddGIR)
 
 	// Blood sugar(BS).
+	// e.GET("/bs/:id", a.ViewBS)
+	// e.POST("/bs/:id", a.AddBS)
 }
