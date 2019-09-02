@@ -20,8 +20,8 @@ services:
     container_name: 'smartkidney-db'
     image: 'mongo'
     volumes:
-      - /data/smartkidney_db:/data/db
-    expose:
+      - smartkidney_db:/data/db
+    ports:
       - '27077:27017'
 volumes:
   smartkidney_db:
