@@ -8,9 +8,9 @@ import (
 
 type (
 	GlomerularInfil struct {
-		ID   bson.ObjectId      `json:"-" bson:"_id,omitempty"`
-		UID  bson.ObjectId      `json:"uid,omitempty" bson:"uid,omitempty"`
-		Logs []BloodPressureLog `json:"logs,omitempty" bson:"logs"`
+		ID   bson.ObjectId        `json:"-" bson:"_id,omitempty"`
+		UID  bson.ObjectId        `json:"uid,omitempty" bson:"uid,omitempty"`
+		Logs []GlomerularInfilLog `json:"logs,omitempty" bson:"logs"`
 	}
 
 	GlomerularInfilLog struct {
