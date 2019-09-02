@@ -10,9 +10,11 @@ import (
 // MongoDB holds metadata about session database and collections name.
 type (
 	MongoDB struct {
-		Conn  *mgo.Session
-		UCol  *mgo.Collection
-		BPCol *mgo.Collection
+		Conn   *mgo.Session
+		UCol   *mgo.Collection
+		BPCol  *mgo.Collection
+		GIRCol *mgo.Collection
+		BSCol  *mgo.Collection
 	}
 )
 
@@ -26,9 +28,11 @@ func NewMongoDB() (*MongoDB, error) {
 	}
 
 	return &MongoDB{
-		Conn:  conn,
-		UCol:  conn.DB(s.DBName).C(s.DBUsersCol),
-		BPCol: conn.DB(s.DBName).C(s.DBBloodPressureCol),
+		Conn:   conn,
+		UCol:   conn.DB(s.DBName).C(s.DBUsersCol),
+		BPCol:  conn.DB(s.DBName).C(s.DBBloodPressureCol),
+		GIRCol: conn.DB(s.DBName).C(s.DBGlomerularInfilCol),
+		BSCol:  conn.DB(s.DBName).C(s.DBBloodSugarCol),
 	}, nil
 }
 
