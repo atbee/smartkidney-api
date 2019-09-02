@@ -40,6 +40,6 @@ func Init(e *echo.Echo) {
 	e.POST("/gir/:id", a.AddGIR)
 
 	// Blood sugar(BS).
-	// e.GET("/bs/:id", a.ViewBS)
-	// e.POST("/bs/:id", a.AddBS)
+	e.GET("/bs/:id", a.ViewBS)
+	e.POST("/bs/:id", a.AddBS)
 }
