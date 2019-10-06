@@ -2,7 +2,6 @@ package api
 
 import (
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/labstack/echo"
@@ -11,8 +10,8 @@ import (
 )
 
 // ViewBP show logs of blood pressure for each user.
-// You can view a list of blood pressure each week by query parameter.
-// ?week=00&year==0000
+// You can view a list of blood pressure each date by query parameter.
+// ?date=2019-10-07 or ?start=2019-10-07&&end=2019-10-10
 func (db *MongoDB) ViewBP(c echo.Context) error {
 	id := c.Param("id")
 	bp := []*model.BloodPressureLog{}
@@ -41,27 +40,29 @@ func (db *MongoDB) ViewBP(c echo.Context) error {
 
 	q := []bson.M{match, unwind, replaceRoot, sort}
 
-	w := c.QueryParam("week")
-	y := c.QueryParam("year")
-	week, _ := strconv.Atoi(w)
-	year, _ := strconv.Atoi(y)
+	d := c.QueryParam("date")
+	s := c.QueryParam("start")
+	e := c.QueryParam("end")
 
-	if w != "" && y != "" {
-		set := bson.M{
-			"$set": bson.M{
-				"week": bson.M{"$week": "$date"},
-				"year": bson.M{"$year": "$date"},
-			},
+	if d != "" || (s != "" && e != "") {
+		st := StartDate(d)
+		et := EndDate(d)
+
+		if d == "" {
+			st = StartDate(s)
+			et = EndDate(e)
 		}
 
-		matchWeek := bson.M{
+		matchDate := bson.M{
 			"$match": bson.M{
-				"week": week,
-				"year": year,
+				"date": bson.M{
+					"$gte": st,
+					"$lt":  et,
+				},
 			},
 		}
 
-		q = []bson.M{match, unwind, replaceRoot, set, matchWeek, sort}
+		q = []bson.M{match, unwind, replaceRoot, matchDate, sort}
 	}
 
 	if err := db.BPCol.Pipe(q).All(&bp); err != nil {
@@ -69,7 +70,7 @@ func (db *MongoDB) ViewBP(c echo.Context) error {
 	}
 
 	if len(bp) == 0 {
-		return c.JSON(http.StatusNotFound, "user data is empty or not found.")
+		return c.JSON(http.StatusNotFound, "user data not found, please check that the request form is correct.")
 	}
 
 	return c.JSON(http.StatusOK, &bp)
