@@ -6,14 +6,23 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-// User holds metadata about a user.
 type (
+	// UserData holds request datas about a user.
+	UserData struct {
+		Name      string        `json:"name" bson:"name,omitempty" validate:"nonzero"`
+		Email     string        `json:"email" bson:"email,omitempty" validate:"nonzero"`
+		BirthDate string     	`json:"birthDate" bson:"birthDate,omitempty"`
+		Gender    string        `json:"gender" bson:"gender,omitempty" validate:"regexp=(^male$|^female$)"`
+		Hospital  string        `json:"hospital" bson:"hospital,omitempty" validate:"nonzero"`
+	}
+
+	// User holds metadata about a user.
 	User struct {
 		ID        bson.ObjectId `json:"_id,omitempty" bson:"_id,omitempty"`
 		CreateAt  time.Time     `json:"-" bson:"createAt"`
 		Name      string        `json:"name" bson:"name,omitempty" validate:"nonzero"`
 		Email     string        `json:"email" bson:"email,omitempty" validate:"nonzero"`
-		BirthDate string        `json:"birthDate" bson:"birthDate,omitempty" validate:"len=10"`
+		BirthDate time.Time     `json:"birthDate" bson:"birthDate"`
 		Gender    string        `json:"gender" bson:"gender,omitempty" validate:"regexp=(^male$|^female$)"`
 		Hospital  string        `json:"hospital" bson:"hospital,omitempty" validate:"nonzero"`
 		Weight    int           `json:"weight,omitempty" bson:"weight,omitempty"`

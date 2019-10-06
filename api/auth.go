@@ -35,17 +35,32 @@ func (db *MongoDB) Login(c echo.Context) (err error) {
 
 // Register the user to database.
 func (db *MongoDB) Register(c echo.Context) (err error) {
-	u := &model.User{
-		ID:       bson.NewObjectId(),
-		CreateAt: time.Now(),
-	}
-	if err := c.Bind(u); err != nil {
+	d := new(model.UserData)
+
+	if err := c.Bind(d); err != nil {
 		return err
+	}
+
+	// Parse birthdate
+	const shortForm = "2006-01-02"
+	bd, err := time.Parse(shortForm, d.BirthDate)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, "invalid date format.")
+	}
+
+	u := &model.User{
+		ID:        bson.NewObjectId(),
+		CreateAt:  time.Now(),
+		Name:      d.Name,
+		Email:     d.Email,
+		BirthDate: bd,
+		Gender:    d.Gender,
+		Hospital:  d.Hospital,
 	}
 
 	// Validate
 	if errs := validator.Validate(u); errs != nil {
-		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid data."}
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid request datas."}
 	}
 
 	// Save user
