@@ -48,4 +48,8 @@ func Init(e *echo.Echo) {
 	// BMI
 	e.GET("/bmi/:id", a.ViewBMI)
 	e.POST("/bmi/:id", a.AddBMI)
+
+	// Water
+	e.GET("/bmi/:id", a.ViewWater)
+	e.POST("/bmi/:id", a.AddWater)
 }
