@@ -2,18 +2,8 @@ package api
 
 import (
 	"log"
-	"net/http"
 	"time"
-
-	"github.com/labstack/echo"
 )
-
-// GetTime to response local time.
-func (db *MongoDB) GetTime(c echo.Context) (err error) {
-	t := time.Now()
-
-	return c.JSON(http.StatusOK, t)
-}
 
 // StartDate create a time to start searching in UTC +07.
 func StartDate(s string) time.Time {

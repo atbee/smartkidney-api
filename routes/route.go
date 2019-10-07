@@ -22,8 +22,6 @@ func Init(e *echo.Echo) {
 	}
 
 	// Routes
-	// Time
-	e.GET("/time", a.GetTime)
 	// Authentication.
 	e.POST("/login", a.Login)
 	e.POST("/register", a.Register)
