@@ -16,5 +16,6 @@ type (
 	GlomerularInfilLog struct {
 		Date time.Time `json:"date,omitempty" bson:"date"`
 		Cr   float64   `json:"cr" bson:"cr"`
+		EGFR float64   `json:"egfr" bson:"egfr"`
 	}
 )
