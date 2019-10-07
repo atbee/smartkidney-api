@@ -15,6 +15,8 @@ type (
 		DBBloodPressureCol   string
 		DBGlomerularInfilCol string
 		DBBloodSugarCol      string
+		DBBMICol             string
+		DBWaterCol           string
 		APIPort              string
 	}
 )
@@ -30,6 +32,8 @@ func Spec() *Specification {
 		DBBloodPressureCol:   os.Getenv("DB_BLOODPRESSURE_COL"),
 		DBGlomerularInfilCol: os.Getenv("DB_GLOMERULARINFIL_COL"),
 		DBBloodSugarCol:      os.Getenv("DB_BLOODSUGAR_COL"),
+		DBBMICol:             os.Getenv("DB_BMI_COL"),
+		DBWaterCol:           os.Getenv("DB_WATER_COL"),
 		APIPort:              os.Getenv("API_PORT"),
 	}
 	return &s
