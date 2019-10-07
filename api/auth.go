@@ -70,6 +70,7 @@ func (db *MongoDB) Register(c echo.Context) (err error) {
 	db.CreateBP(u.ID)
 	db.CreateGIR(u.ID)
 	db.CreateBS(u.ID)
+	db.CreateBMI(u.ID)
 
 	return c.JSON(http.StatusCreated, u) // User has been registered.
 }

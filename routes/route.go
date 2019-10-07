@@ -14,11 +14,13 @@ func Init(e *echo.Echo) {
 	}
 
 	a := &api.MongoDB{
-		Conn:   db.Conn,
-		UCol:   db.UCol,
-		BPCol:  db.BPCol,
-		GIRCol: db.GIRCol,
-		BSCol:  db.BSCol,
+		Conn:     db.Conn,
+		UCol:     db.UCol,
+		BPCol:    db.BPCol,
+		GIRCol:   db.GIRCol,
+		BSCol:    db.BSCol,
+		BMICol:   db.BMICol,
+		WATERCol: db.WATERCol,
 	}
 
 	// Routes
@@ -42,4 +44,8 @@ func Init(e *echo.Echo) {
 	// Blood sugar(BS).
 	e.GET("/bs/:id", a.ViewBS)
 	e.POST("/bs/:id", a.AddBS)
+
+	// BMI
+	e.GET("/bmi/:id", a.ViewBMI)
+	e.POST("/bmi/:id", a.AddBMI)
 }
