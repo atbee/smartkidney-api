@@ -62,7 +62,7 @@ func (db *MongoDB) ViewBMI(c echo.Context) error {
 		q = []bson.M{match, unwind, replaceRoot, matchDate, sort}
 	}
 
-	if err := db.BSCol.Pipe(q).All(&bmi); err != nil {
+	if err := db.BMICol.Pipe(q).All(&bmi); err != nil {
 		return c.JSON(http.StatusNotFound, "the user not found.")
 	}
 
@@ -92,7 +92,7 @@ func (db *MongoDB) AddBMI(c echo.Context) error {
 		},
 	}
 
-	if err := db.BSCol.Update(q, &d); err != nil {
+	if err := db.BMICol.Update(q, &d); err != nil {
 		return err
 	}
 
@@ -104,7 +104,7 @@ func (db *MongoDB) CreateBMI(uid bson.ObjectId) {
 		ID:  bson.NewObjectId(),
 		UID: uid,
 	}
-	if err := db.BSCol.Insert(&bmi); err != nil {
+	if err := db.BMICol.Insert(&bmi); err != nil {
 		return
 	}
 }
