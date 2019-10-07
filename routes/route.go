@@ -50,6 +50,6 @@ func Init(e *echo.Echo) {
 	e.POST("/bmi/:id", a.AddBMI)
 
 	// Water
-	e.GET("/bmi/:id", a.ViewWater)
-	e.POST("/bmi/:id", a.AddWater)
+	e.GET("/water/:id", a.ViewWater)
+	e.POST("/water/:id", a.AddWater)
 }
