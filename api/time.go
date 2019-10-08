@@ -1,6 +1,7 @@
 package api
 
 import (
+	"errors"
 	"log"
 	"time"
 )
@@ -30,4 +31,15 @@ func EndDate(s string) time.Time {
 	t = t.AddDate(0, 0, 1)
 
 	return t
+}
+
+// ParseDate convert value from characters to date ISO.
+func ParseDate(s string) (time.Time, error) {
+	const shortForm = "2006-01-02"
+	bd, err := time.Parse(shortForm, s)
+	if err != nil {
+		return time.Time{}, errors.New("invalid date format.")
+	}
+
+	return bd, nil
 }
