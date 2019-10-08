@@ -23,9 +23,28 @@ func (db *MongoDB) FindUser(c echo.Context) error {
 // EditUser edit user personal information.
 func (db *MongoDB) EditUser(c echo.Context) error {
 	id := c.Param("id")
-	u := new(model.User)
-	if err := c.Bind(u); err != nil {
+	ud := new(model.UserData)
+	if err := c.Bind(ud); err != nil {
 		return err
+	}
+
+	u := &model.User{
+		Name:     ud.Name,
+		Email:    ud.Email,
+		Gender:   ud.Gender,
+		Hospital: ud.Hospital,
+		Weight:   ud.Weight,
+		Height:   ud.Height,
+	}
+
+	// Parse birthdate
+	if ud.BirthDate != "" {
+		bd, err := ParseDate(ud.BirthDate)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, "invalid date format.")
+		}
+
+		u.BirthDate = bd
 	}
 
 	d := bson.M{
