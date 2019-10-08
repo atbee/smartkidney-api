@@ -67,6 +67,31 @@ func (db *MongoDB) DeleteUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, "cannot delete user.")
 	}
 
+	// Remove the user in bloodPressures collection
+	if err := db.BPCol.Remove(bson.M{"uid": bson.ObjectIdHex(id)}); err != nil {
+		return c.JSON(http.StatusBadRequest, "cannot delete user of bloodPressures collection.")
+	}
+
+	// Remove the user in glomerularInfils collection
+	if err := db.GIRCol.Remove(bson.M{"uid": bson.ObjectIdHex(id)}); err != nil {
+		return c.JSON(http.StatusBadRequest, "cannot delete user of glomerularInfils collection.")
+	}
+
+	// Remove the user in bloodSugars collection
+	if err := db.BSCol.Remove(bson.M{"uid": bson.ObjectIdHex(id)}); err != nil {
+		return c.JSON(http.StatusBadRequest, "cannot delete user of bloodSugars collection.")
+	}
+
+	// Remove the user in waterLists collection
+	if err := db.WATERCol.Remove(bson.M{"uid": bson.ObjectIdHex(id)}); err != nil {
+		return c.JSON(http.StatusBadRequest, "cannot delete user of waterLists collection.")
+	}
+
+	// Remove the user in bmiLists collection
+	if err := db.BMICol.Remove(bson.M{"uid": bson.ObjectIdHex(id)}); err != nil {
+		return c.JSON(http.StatusBadRequest, "cannot delete user of bmiLists collection.")
+	}
+
 	return c.JSON(http.StatusOK, "the user has been deleted.")
 }
 
