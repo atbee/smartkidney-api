@@ -42,8 +42,7 @@ func (db *MongoDB) Register(c echo.Context) (err error) {
 	}
 
 	// Parse birthdate
-	const shortForm = "2006-01-02"
-	bd, err := time.Parse(shortForm, d.BirthDate)
+	bd, err := ParseDate(d.BirthDate)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, "invalid date format.")
 	}
