@@ -6,16 +6,21 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: smk-api:6
     environment:
+      - TZ=Asia/Bangkok
       - DB_HOST
       - DB_NAME
       - DB_USERS_COL
       - DB_BLOODPRESSURE_COL
       - DB_GLOMERULARINFIL_COL
       - DB_BLOODSUGAR_COL
+      - DB_BMI_COL
+      - DB_WATER_COL
       - API_PORT
     ports:
       - "1323:1323"
+
   db:
     container_name: 'smartkidney-db'
     image: 'mongo'
@@ -23,6 +28,7 @@ services:
       - smartkidney_db:/data/db
     ports:
       - '27027:27017'
+
   doc:
     image: swaggerapi/swagger-ui
     container_name: "smartkidney-doc"
@@ -30,5 +36,6 @@ services:
       - "4040:8080"
     environment:
       API_URL: "https://atb-files.s3-ap-southeast-1.amazonaws.com/swagger.json"
+      
 volumes:
   smartkidney_db:
