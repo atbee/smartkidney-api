@@ -26,6 +26,8 @@ services:
     image: 'mongo'
     volumes:
       - smartkidney_db:/data/db
+    environment:
+      - TZ=Asia/Bangkok
     ports:
       - '27027:27017'
 
