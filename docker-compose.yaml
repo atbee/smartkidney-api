@@ -9,15 +9,15 @@ services:
     image: smk-api:1
     environment:
       - TZ=Asia/Bangkok
-      - DB_HOST=159.65.137.164:27017
-      - DB_NAME=smartKidneyDB
-      - DB_USERS_COL=users
-      - DB_BLOODPRESSURE_COL=bloodPressures
-      - DB_GLOMERULARINFIL_COL=glomerularInfils
-      - DB_BLOODSUGAR_COL=bloodSugars
-      - DB_BMI_COL=bmiLists
-      - DB_WATER_COL=waterLists
-      - API_PORT=:1323
+      - DB_HOST
+      - DB_NAME
+      - DB_USERS_COL
+      - DB_BLOODPRESSURE_COL
+      - DB_GLOMERULARINFIL_COL
+      - DB_BLOODSUGAR_COL
+      - DB_BMI_COL
+      - DB_WATER_COL
+      - API_PORT
     ports:
       - "1323:1323"
 
@@ -27,13 +27,13 @@ services:
     volumes:
       - smartkidney_db:/data/db
     ports:
-      - '27017:27017'
+      - '27027:27017'
 
   doc:
     image: swaggerapi/swagger-ui
     container_name: "smartkidney-doc"
     ports:
-      - "8080:8080"
+      - "4040:8080"
     environment:
       API_URL: "https://atb-files.s3-ap-southeast-1.amazonaws.com/swagger.json"
       
