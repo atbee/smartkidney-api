@@ -24,7 +24,7 @@ type (
 func NewMongoDB() (*MongoDB, error) {
 	s := config.Spec()
 	conn, err := mgo.Dial(s.DBHost)
-
+	fmt.Println("mongo: dial at ", s.DBHost)
 	if err != nil {
 		return nil, fmt.Errorf("mongo: could not dial: %v", err)
 	}
