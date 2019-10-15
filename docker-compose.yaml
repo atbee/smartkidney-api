@@ -20,6 +20,8 @@ services:
       - API_PORT
     ports:
       - "1323:1323"
+    networks: 
+      - backend
 
   db:
     container_name: 'smartkidney-db'
@@ -30,14 +32,19 @@ services:
       - TZ=Asia/Bangkok
     ports:
       - '27017:27017'
+    networks: 
+      - backend
 
-  # doc:
-  #   image: swaggerapi/swagger-ui
-  #   container_name: "smartkidney-doc"
-  #   ports:
-  #     - "4040:8080"
-  #   environment:
-  #     API_URL: "https://atb-files.s3-ap-southeast-1.amazonaws.com/swagger.json"
+  doc:
+    image: swaggerapi/swagger-ui
+    container_name: "smartkidney-doc"
+    ports:
+      - "4040:8080"
+    environment:
+      API_URL: "https://atb-files.s3-ap-southeast-1.amazonaws.com/swagger.json"
       
 volumes:
   smartkidney_db:
+
+networks: 
+  backend:
